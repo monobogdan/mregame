@@ -1,0 +1,7 @@
+; WRE.def : Declares the module parameters for the DLL.
+
+LIBRARY      "WRE"
+DESCRIPTION  'WRE Windows Dynamic Link Library'
+
+EXPORTS
+    vm_entry @1

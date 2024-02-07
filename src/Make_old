@@ -1,0 +1,22 @@
+
+MOTO_DEFINES = -D__P2K__ -DEP1
+MOTO_SDK = D:/ElfKit/
+MOTO_CC = $(MOTO_SDK)tcc.exe
+MOTO_FLAGS = -I$(MOTO_SDK)/SDK/ $(MOTO_DEFINES) -bigend -apcs /interwork -O2
+MOTO_LINK = $(MOTO_SDK)armlink.exe
+MOTO_LIBMAIN = Lib.o
+
+SOURCE = game.c
+
+clean:
+	del bin/*.*
+	
+win32:
+	echo Use Visual Studio (msbuild not supported yet)
+	
+moto:
+	$(MOTO_CC) $(MOTO_FLAGS) -c platform/plat_moto_init.c platform/plat_moto.c resources/gamedata.c $(SOURCE)
+	copy /Y *.o bin\\
+	del *.o
+	$(MOTO_LINK) -nolocals -reloc -first $(MOTO_LIBMAIN)\(Lib\) $(MOTO_SDK)/lib/$(MOTO_LIBMAIN) bin/game.o bin/gamedata.o bin/plat_moto.o bin/plat_moto_init.o \
+		-o game.elf
